@@ -78,6 +78,11 @@ trait OPCSimulator
     */
   def resetSystem = {
     getClient.write("GVL.RESET", true)
+    getClient.write("GVL.R1", false)
+    Thread.sleep(300)
+    //while (getClient.("GVL.RESET", true)) {
+    //  Thread.sleep(10)
+    //}
   }
 
   def initializeSystem = {

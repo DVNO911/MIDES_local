@@ -1,8 +1,6 @@
 package Mides
 
 import TestUnit.TLSpecifications
-import LSM.LaneChangeModular.LaneChangeSimulateModular
-import LSM.LaneChangeMoreInputs.LaneChangeSimulateMonolithic
 import grizzled.slf4j.Logging
 import modelbuilding.core.SUL
 import modelbuilding.helpers.ConfigHelper
@@ -11,8 +9,13 @@ import modelbuilding.solvers._
 
 object Mides extends Logging {
 
-  val modelName: String = ConfigHelper.model  //"MachineBufferNoSpec"
-  val solver: String    = ConfigHelper.solver //"LStarPlantLearner" // "modular", "mono"
+  //val modelName: String = ConfigHelper.model  //"MachineBufferNoSpec"
+  //val modelName: String = "MachineBufferNoSpec"
+  //val modelName: String = "MachineBufferOPC"
+  val modelName: String = "GripperExampleOPC"
+
+  //val solver: String    = ConfigHelper.solver //"LStarPlantLearner" // "modular", "mono"
+  val solver: String = "LStarPlantLearner"
 
   val sul: SUL = modelName match {
     case "TestUnit" =>
@@ -79,6 +82,13 @@ object Mides extends Logging {
         Some(MachineBuffer.MachineBufferSpecifications()),
         false
       )
+    case "GripperExampleOPC" =>
+      SUL(
+        GripperExample.GripperExample,
+        new GripperExample.GripperExampleOPC,
+        Some(GripperExample.GripperExampleSpecifications()),
+        false
+      )
     case "MachineBufferNoSpec" =>
       SUL(
         MachineBuffer.MachineBuffer,
@@ -99,33 +109,13 @@ object Mides extends Logging {
       SUL(StickPicking.Sticks, new StickPicking.SimulateSticks(5), None, false)
     case "AGV" =>
       SUL(AGV.Agv, new AGV.SimulateAgv, Some(AGV.AGVSpecifications()), false)
-    case "LaneChange" =>
-      SUL(
-        LSM.LaneChange,
-        new LSM.LaneChangeSimulate,
-        None,
-        false
-      )
-    case "LaneChangeMonolithic" =>
-      SUL(
-        LSM.LaneChangeMoreInputs.LaneChange,
-        new LaneChangeSimulateMonolithic,
-        None,
-        false
-      )
-    case "LaneChangeModular" =>
-      SUL(
-        LSM.LaneChangeModular.LaneChange,
-        new LaneChangeSimulateModular,
-        None,
-        false
-      )
+
     case _ => throw new Exception("A model wasn't defined.")
   }
 
   def main(args: Array[String]): Unit = {
 
-    //info(s"Running sul: $sul")
+    info(s"Running sul: $sul")
     info(s"Starting learner for : $modelName, using $solver as solver")
 
     val result = solver match {

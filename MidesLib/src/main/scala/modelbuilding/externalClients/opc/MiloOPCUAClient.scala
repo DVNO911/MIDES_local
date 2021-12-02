@@ -185,7 +185,7 @@ class MiloOPCUAClient extends Logging {
       client.getSubscriptionManager.createSubscription(samplingInterval).get()
 
     val filtered = identifiers.filter(availableNodes.contains(_))
-    // println(filtered)
+    println(filtered)
     identifiers.filterNot(availableNodes.contains(_)).foreach { s =>
       println("OPCUA - key does not exist! skipping: " + s)
     }

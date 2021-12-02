@@ -25,7 +25,7 @@ LStar {
 }
 opc {
   url	= "opc.tcp://COMPUTERNAME:4840" //This should contain the correct server, where normally only the computername should be changed. 4840 is the port.
-  runner_timeout= 1000
+  runner_timeout= 50
 }
 matlab {
        program {

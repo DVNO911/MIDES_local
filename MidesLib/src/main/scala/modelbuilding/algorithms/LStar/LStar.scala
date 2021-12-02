@@ -58,7 +58,7 @@ class LStar(
           s"Table is not consistent 1:${inCons.get._1} 2:${inCons.get._2} 3:${inCons.get._3}"
         )
         debug("updating table with distinguishing string")
-//        info(oTable.getAutomata.toString)
+        info(oTable.getAutomata.toString)
         learn(
           updateTable(
             oTable,
@@ -70,7 +70,7 @@ class LStar(
         )
       } else {
         info(oTable.getAutomata.toString)
-        oTable.getAutomata.createDotFile
+        oTable.getAutomata.removeTauAndDump.createDotFile
         SupremicaHelpers.exportAsSupremicaAutomata(
           Automata(Set(oTable.getAutomata.removeTauAndDump)),
           name = "hypothesis"
