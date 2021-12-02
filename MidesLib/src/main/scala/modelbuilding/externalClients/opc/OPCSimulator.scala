@@ -23,6 +23,7 @@ import grizzled.slf4j.Logging
 import modelbuilding.core._
 import modelbuilding.core.interfaces.simulator.{Simulator, ThreeStateOperation}
 import modelbuilding.helpers.ConfigHelper
+import scala.sys.process._
 
 trait OPCVariables {
   val stateExecVariable: String
@@ -77,11 +78,13 @@ trait OPCSimulator
     * @return
     */
   def resetSystem = {
+
+    //"./rosreset.sh" !; //funkar inte riktigt just nu
+
+    //fullösning
     getClient.write("GVL.RESET", true)
     getClient.write("GVL.R1", false)
     Thread.sleep(300)
-    //while (getClient.("GVL.RESET", true)) {
-    //  Thread.sleep(10)
     //}
   }
 
@@ -89,9 +92,16 @@ trait OPCSimulator
     getClient.connect()
     while (!getClient.isConnected) {}
     subscribeToAllVars
-
     resetSystem
     println("The system has initialized.")
+    //"gnome-terminal -- echo 'starting script'" !
+    //"gnome-terminal -- /bin/bash -c 'cd DesignProjectSSY226/MIDES;ls; . rosreset.sh'" !!
+    //"gnome-terminal -- /bin/bash -c 'ls'" !!
+    //Seq(".", "rosreset.sh").!!
+    // "gnome-terminal -- cd formal8" !!;
+    // "gnome-terminal -- . install/setup.bash " !!;
+    // "gnome-terminal -- ros2 launch dorna_example test.launch.py" !!;
+    // "gnome-terminal -- echo 'starting script'" !!
   }
 
   /** Reset the system, wait for sometime before reading the state variables.
