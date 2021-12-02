@@ -79,12 +79,25 @@ trait OPCSimulator
     */
   def resetSystem = {
 
-    //"./rosreset.sh" !; //funkar inte riktigt just nu
+    "./rosreset.sh" !; //funkar inte riktigt just nu
 
     //fullösning
-    getClient.write("GVL.RESET", true)
+    getClient.write("GVL.RESET", false)
     getClient.write("GVL.R1", false)
-    Thread.sleep(300)
+    getClient.write("GVL.R2", false)
+    getClient.write("GVL.R3", false)
+    getClient.write("GVL.R4", false)
+    getClient.write("GVL.R5", false)
+    getClient.write("GVL.R6", false)
+    getClient.write("GVL.R7", false)
+    getClient.write("GVL.S1", false)
+    getClient.write("GVL.S2", false)
+    getClient.write("GVL.S3", false)
+    getClient.write("GVL.S4", false)
+    getClient.write("GVL.S5", false)
+    getClient.write("GVL.S6", false)
+    getClient.write("GVL.S7", false)
+    Thread.sleep(5000)
     //}
   }
 
